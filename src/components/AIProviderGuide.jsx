@@ -266,7 +266,7 @@ const AIProviderGuide = () => {
             🔄 Alternative AI Providers
           </h3>
           <p className="text-sm text-gray-600 mt-1">
-            Other AI services you might consider for portfolio projects
+            Other AI services you might consider
           </p>
         </div>
 
