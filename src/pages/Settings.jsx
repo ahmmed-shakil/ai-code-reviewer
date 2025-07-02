@@ -13,6 +13,8 @@ import {
 import toast from "react-hot-toast";
 import { useStore } from "../store/useStore";
 import aiService from "../services/aiService";
+import ErrorDebugPanel from "../components/ErrorDebugPanel";
+import AIProviderGuide from "../components/AIProviderGuide";
 
 const Settings = () => {
   const {
@@ -193,6 +195,46 @@ const Settings = () => {
             </p>
           </div>
 
+          {/* OpenAI Free Tier Warning */}
+          {aiProvider === "openai" && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+              <div className="flex items-start space-x-2">
+                <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-medium text-red-800 dark:text-red-200">
+                    ⚠️ OpenAI Free Tier Alert
+                  </h4>
+                  <div className="text-sm text-red-700 dark:text-red-300 mt-1 space-y-1">
+                    <p>
+                      • <strong>Free tier is very limited:</strong> Often just
+                      3-20 requests per day total
+                    </p>
+                    <p>
+                      • <strong>Rate limits hit quickly:</strong> Even testing
+                      the connection uses your quota
+                    </p>
+                    <p>
+                      • <strong>Recommended:</strong> Add $5+ billing credit for
+                      real usage
+                    </p>
+                    <p>
+                      • <strong>Alternative:</strong> Try Google Gemini (much
+                      more generous free tier)
+                    </p>
+                  </div>
+                  <div className="mt-2">
+                    <button
+                      onClick={() => setAiProvider("gemini")}
+                      className="inline-flex items-center text-sm font-medium text-red-700 dark:text-red-300 hover:text-red-600 dark:hover:text-red-200"
+                    >
+                      Switch to Google Gemini →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Connection Test */}
           <div className="flex items-center space-x-4">
             <button
@@ -301,6 +343,22 @@ const Settings = () => {
             • Enable only the review rules relevant to your current project
           </li>
         </ul>
+      </div>
+
+      {/* AI Provider Guide */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          AI Provider Setup Guide
+        </h2>
+        <AIProviderGuide />
+      </div>
+
+      {/* Error Debug Panel */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          API Error Debugging
+        </h2>
+        <ErrorDebugPanel />
       </div>
     </div>
   );

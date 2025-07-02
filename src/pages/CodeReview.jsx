@@ -61,16 +61,17 @@ const CodeReview = () => {
     }
 
     // Check for recent requests to prevent rate limiting
-    const lastRequestKey = `lastRequest_${aiProvider}`;
-    const lastRequest = localStorage.getItem(lastRequestKey);
+    const rateLimitKey = `rateLimit_${aiProvider}_${apiKey.slice(-8)}`;
+    const lastRequest = localStorage.getItem(rateLimitKey);
     if (lastRequest) {
-      const timeSince = Date.now() - new Date(lastRequest).getTime();
-      const cooldownTime = aiProvider === "openai" ? 20000 : 10000; // 20s for OpenAI, 10s for Gemini
+      const timeSince = Date.now() - parseInt(lastRequest);
+      const cooldownTime = aiProvider === "openai" ? 65000 : 20000; // 65s for OpenAI, 20s for Gemini
 
       if (timeSince < cooldownTime) {
         const waitTime = Math.ceil((cooldownTime - timeSince) / 1000);
         toast.error(
-          `Please wait ${waitTime} seconds before making another request to avoid rate limits`
+          `⏳ Rate limit protection: Please wait ${waitTime} seconds. OpenAI free tier is very strict (3 requests/minute).`,
+          { duration: 6000 }
         );
         return;
       }
@@ -79,9 +80,6 @@ const CodeReview = () => {
     setIsReviewing(true);
 
     try {
-      // Record request time
-      localStorage.setItem(lastRequestKey, new Date().toISOString());
-
       const review = await aiService.reviewCode(
         code,
         fileName,
@@ -302,6 +300,26 @@ const CodeReview = () => {
         </div>
       )}
 
+      {/* OpenAI Free Tier Warning */}
+      {apiKey && aiProvider === "openai" && (
+        <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-md p-4">
+          <div className="flex">
+            <AlertCircle className="h-5 w-5 text-orange-400 mr-2 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-medium text-orange-800 dark:text-orange-200">
+                OpenAI Free Tier Limits
+              </h3>
+              <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
+                OpenAI free tier is very strict: only 3 requests per minute.
+                Wait at least 60 seconds between reviews to avoid rate limits.
+                Consider Google Gemini for more generous free limits (15
+                requests/minute).
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Rate Limit Information */}
       {apiKey && <RateLimitInfo provider={aiProvider} />}
 
@@ -345,6 +363,13 @@ const CodeReview = () => {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter file name (e.g., app.js)"
                 />
+                {/* Code length warning for OpenAI */}
+                {apiKey && aiProvider === "openai" && code.length > 2000 && (
+                  <div className="mt-2 text-sm text-orange-600 dark:text-orange-400">
+                    ⚠️ Code is {code.length} characters. OpenAI free tier works
+                    best with &lt;2000 characters.
+                  </div>
+                )}
               </div>
 
               {/* Monaco Editor */}

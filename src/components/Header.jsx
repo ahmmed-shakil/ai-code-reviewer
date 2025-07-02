@@ -61,7 +61,7 @@ const Header = () => {
           </nav>
 
           {/* Theme Toggle */}
-          <button
+          {/* <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
             aria-label="Toggle theme"
@@ -71,7 +71,7 @@ const Header = () => {
             ) : (
               <Moon className="h-5 w-5" />
             )}
-          </button>
+          </button> */}
         </div>
 
         {/* Mobile Navigation */}

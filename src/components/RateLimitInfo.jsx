@@ -39,14 +39,15 @@ const RateLimitInfo = ({ provider }) => {
 
   const rateLimits = {
     openai: {
-      free: "Free tier: 3 requests/minute, 200 requests/day",
-      paid: "Paid tier: 3,500 requests/minute",
-      recommendation: "Wait 20+ seconds between requests for free tier",
+      free: "⚠️ Free tier: Very limited (often 3-20 requests/day total)",
+      paid: "Paid tier ($5+ credit): 3,500+ requests/minute",
+      recommendation:
+        "� Free tier exhausts quickly! Add $5+ credit for real usage",
     },
     gemini: {
       free: "Free tier: 15 requests/minute, 1,500 requests/day",
-      paid: "Paid tier: 1,000 requests/minute",
-      recommendation: "Wait 4+ seconds between requests for free tier",
+      paid: "Paid tier: 1,000+ requests/minute",
+      recommendation: "Much more generous free tier than OpenAI",
     },
   };
 

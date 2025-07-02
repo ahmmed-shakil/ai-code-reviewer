@@ -46,6 +46,29 @@ const Dashboard = () => {
         </p>
       </div>
 
+      {/* API Provider Tip */}
+      <div className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <div className="flex items-start space-x-3">
+          <div className="text-2xl">💡</div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+              Getting Rate Limited?
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              <strong>OpenAI free tier</strong> has very strict limits (often
+              just 3-20 requests per day). <strong> Google Gemini</strong>{" "}
+              offers much more generous free usage.
+              <Link
+                to="/settings"
+                className="text-blue-600 hover:text-blue-500 font-medium"
+              >
+                Switch providers in Settings →
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
