@@ -90,8 +90,7 @@ const ErrorDebugPanel = () => {
               )}
             </h3>
             <p className="text-sm text-gray-600 mt-1">
-              Raw API responses and errors for troubleshooting and portfolio
-              demonstration
+              Raw API responses and errors for troubleshooting
             </p>
           </div>
           <div className="flex space-x-2">
