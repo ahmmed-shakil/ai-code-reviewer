@@ -75,15 +75,15 @@ const ErrorDebugPanel = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
       <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-gray-900 flex items-center flex-wrap gap-2">
               🐛 API Debug Panel
-              <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
+              <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
                 {rawErrors.length} error{rawErrors.length !== 1 ? "s" : ""}
               </span>
               {successfulResponses.length > 0 && (
-                <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                   {successfulResponses.length} response
                   {successfulResponses.length !== 1 ? "s" : ""}
                 </span>
@@ -93,13 +93,13 @@ const ErrorDebugPanel = () => {
               Raw API responses and errors for troubleshooting
             </p>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2 sm:flex-nowrap">
             <button
               onClick={() => {
                 loadErrors();
                 loadSuccessfulResponses();
               }}
-              className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+              className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors whitespace-nowrap"
             >
               Refresh
             </button>
@@ -108,13 +108,13 @@ const ErrorDebugPanel = () => {
                 clearErrors();
                 clearSuccessfulResponses();
               }}
-              className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+              className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors whitespace-nowrap"
             >
               Clear All
             </button>
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors whitespace-nowrap"
             >
               {isExpanded ? "Collapse" : "Expand"}
             </button>
@@ -125,10 +125,10 @@ const ErrorDebugPanel = () => {
       {isExpanded && (
         <div className="p-4">
           {/* Tab Navigation */}
-          <div className="flex space-x-4 mb-4 border-b border-gray-200">
+          <div className="flex flex-wrap gap-2 sm:gap-4 mb-4 border-b border-gray-200 overflow-x-auto">
             <button
               onClick={() => setActiveTab("errors")}
-              className={`pb-2 px-1 text-sm font-medium border-b-2 transition-colors ${
+              className={`pb-2 px-2 sm:px-1 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === "errors"
                   ? "border-red-500 text-red-600"
                   : "border-transparent text-gray-500 hover:text-gray-700"
@@ -138,13 +138,13 @@ const ErrorDebugPanel = () => {
             </button>
             <button
               onClick={() => setActiveTab("responses")}
-              className={`pb-2 px-1 text-sm font-medium border-b-2 transition-colors ${
+              className={`pb-2 px-2 sm:px-1 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === "responses"
                   ? "border-green-500 text-green-600"
                   : "border-transparent text-gray-500 hover:text-gray-700"
               }`}
             >
-              Successful Responses ({successfulResponses.length})
+              Responses ({successfulResponses.length})
             </button>
           </div>
           <div className="space-y-3">
@@ -166,8 +166,8 @@ const ErrorDebugPanel = () => {
                   }
                 >
                   <div className="p-3 bg-red-50">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <span className="font-medium text-gray-900">
                           {error.provider.toUpperCase()}
                         </span>
@@ -178,15 +178,15 @@ const ErrorDebugPanel = () => {
                         >
                           {error.status} {error.statusText}
                         </span>
-                        <span className="text-gray-500">
+                        <span className="text-gray-500 text-xs sm:text-sm">
                           {new Date(error.timestamp).toLocaleString()}
                         </span>
                       </div>
-                      <div className="text-gray-400">
+                      <div className="text-gray-400 self-end sm:self-center">
                         {selectedError === `error-${index}` ? "▼" : "▶"}
                       </div>
                     </div>
-                    <div className="text-xs text-black mt-1 truncate">
+                    <div className="text-xs text-black mt-1 break-words">
                       {error.message}
                     </div>
                   </div>
@@ -252,23 +252,23 @@ const ErrorDebugPanel = () => {
                   }
                 >
                   <div className="p-3 bg-green-50">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <span className="font-medium text-gray-900">
                           SUCCESSFUL RESPONSE
                         </span>
                         <span className="text-green-600 font-mono">
                           {response.contentLength} chars
                         </span>
-                        <span className="text-gray-500">
+                        <span className="text-gray-500 text-xs sm:text-sm">
                           {new Date(response.timestamp).toLocaleString()}
                         </span>
                       </div>
-                      <div className="text-gray-400">
+                      <div className="text-gray-400 self-end sm:self-center">
                         {selectedError === `response-${index}` ? "▼" : "▶"}
                       </div>
                     </div>
-                    <div className="text-xs text-black mt-1 truncate">
+                    <div className="text-xs text-black mt-1 break-words">
                       {response.contentPreview}
                     </div>
                   </div>
@@ -294,22 +294,22 @@ const ErrorDebugPanel = () => {
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <h4 className="font-medium text-blue-900 mb-2">💡 Debug Tips</h4>
             <ul className="text-sm text-blue-800 space-y-1">
-              <li>
+              <li className="break-words">
                 • <strong>401 Unauthorized:</strong> Check API key validity
               </li>
-              <li>
+              <li className="break-words">
                 • <strong>403 Forbidden:</strong> API key lacks permissions or
                 billing required
               </li>
-              <li>
+              <li className="break-words">
                 • <strong>429 Rate Limited:</strong> Too many requests, wait and
                 retry
               </li>
-              <li>
+              <li className="break-words">
                 • <strong>404 Not Found:</strong> Model not available in your
                 region
               </li>
-              <li>
+              <li className="break-words">
                 • <strong>500 Server Error:</strong> Temporary service issue
               </li>
             </ul>

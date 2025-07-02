@@ -170,10 +170,38 @@ npm run build
 
 The built files in the `dist` folder can be deployed to any static hosting service:
 
-- **Vercel**: Connect your GitHub repository
-- **Netlify**: Drag and drop the `dist` folder
-- **GitHub Pages**: Use GitHub Actions workflow
-- **AWS S3**: Upload to S3 bucket with static website hosting
+#### Vercel
+1. Connect your GitHub repository
+2. Vercel automatically handles SPA routing
+
+#### Netlify
+1. Drag and drop the `dist` folder
+2. The `_redirects` file is included for proper SPA routing
+
+#### GitHub Pages
+1. Use GitHub Actions workflow
+2. Add a `404.html` file that redirects to `index.html`
+
+#### AWS S3 / CloudFront
+1. Upload to S3 bucket with static website hosting
+2. Configure CloudFront for SPA routing with error pages
+
+#### Apache Server
+Add this to your `.htaccess` file:
+```apache
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+```
+
+#### Nginx Server
+Add this to your nginx config:
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
 
 ## 🔐 Security Considerations
 
@@ -273,6 +301,15 @@ The built files in the `dist` folder can be deployed to any static hosting servi
 - Check your internet connection
 - Verify the API provider's status page
 - Try again after a few moments
+
+**Page Not Found on Refresh (SPA Routing Issue)**
+
+- This happens when refreshing the page on routes like `/settings` or `/review`
+- The development server is configured to handle this automatically
+- For production deployment, ensure your hosting service supports SPA routing:
+  - Netlify: Uses the included `_redirects` file
+  - Vercel: Handles SPA routing automatically
+  - Other hosts: See deployment guide above
 
 ### 💡 Tips for Portfolio Projects
 
