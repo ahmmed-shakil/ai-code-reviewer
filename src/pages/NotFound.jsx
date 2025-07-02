@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Home, ArrowLeft } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Home, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
   return (
@@ -17,7 +17,7 @@ const NotFound = () => {
             The page you're looking for doesn't exist or has been moved.
           </p>
         </div>
-        
+
         <div className="space-y-4">
           <Link
             to="/"
@@ -26,7 +26,7 @@ const NotFound = () => {
             <Home className="w-4 h-4 mr-2" />
             Go to Dashboard
           </Link>
-          
+
           <div className="flex justify-center">
             <button
               onClick={() => window.history.back()}
@@ -37,11 +37,11 @@ const NotFound = () => {
             </button>
           </div>
         </div>
-        
+
         <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
           <p className="text-sm text-blue-800 dark:text-blue-200">
-            💡 If you reached this page by refreshing the browser, this might be a routing issue. 
-            Try navigating using the menu instead.
+            💡 If you reached this page by refreshing the browser, this might be
+            a routing issue. Try navigating using the menu instead.
           </p>
         </div>
       </div>
